@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>hello</title>
+<button id="chatbot-button">Chat with us</button>
+<style>
+    #chatbot-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+</style>
+
+    </head>
+<body>
+    <?php
+
+$api_key = "your_chatbot_api_key";
+$chatbot_api_url = "https://your_chatbot_api_url.com";
+$chatbot_api = new ChatbotAPI($api_key, $chatbot_api_url);
+
+
+if ($_POST["message"]) {
+  $message = $_POST["message"];
+  $response = $chatbot_api->send_message($message);
+  echo json_encode($response);
+}
+?>
+<script>
+    var chatbotButton = document.getElementById("chatbot-button");
+chatbotButton.onclick = function() {
+ 
+}
+
+</script>
+<script>
+    var chatbotWindow = window.open("your_chatbot_url", "chatbotWindow", "width=400,height=600");
+
+function sendMessage(message) {
+  
+  $.ajax({
+    url: "chatbot_api.php",
+    method: "POST",
+    data: {
+      message: message
+    },
+    success: function(response) {
+      
+      chatbotWindow.postMessage(response, "*");
+    }
+  });
+}
+
+window.addEventListener("message", function(event) {
+  
+  var message = event.data;
+ 
+});
+
+</script>
+
+</body>
+</html>
